@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Student Expense Tracker</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>College Student Expense Tracker</h1>
+    </header>
+
+    <main>
+        <!-- Add Expense Form -->
+        <section class="form-section">
+            <h2>Add Expense</h2>
+            <form action="/add-expense" method="post">
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" placeholder="e.g., 500" required>
+
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="Food">Food</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Stationery">Stationery</option>
+                    <option value="Others">Others</option>
+                </select>
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="notes">Notes (Optional):</label>
+                <textarea id="notes" name="notes" placeholder="Add additional details here..."></textarea>
+
+                <button type="submit">Add Expense</button>
+            </form>
+        </section>
+
+        <!-- Expenses Table -->
+        <section class="table-section">
+            <h2>Expenses</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense['Amount'] }}</td>
+                        <td>{{ expense['Category'] }}</td>
+                        <td>{{ expense['Date'] }}</td>
+                        <td>{{ expense['Notes'] }}</td>
+                        <td>
+                            <form action="/delete-expense/{{ loop.index0 }}" method="post" style="display:inline;">
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - College Student Expense Tracker</p>
+    </footer>
+</body>
+</html>
